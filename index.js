@@ -10,8 +10,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             </div>
             `
-        })
+        });
         return movieHTML.join('');
     }
-    document.querySelector(".movies-container").innerHTML = renderMovies(movieData)
-})
+    document.getElementById('search-form').addEventListener('submit', e => {
+        e.preventDefault();
+        document.querySelector(".movies-container").innerHTML = renderMovies(movieData);
+    });
+});
