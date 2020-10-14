@@ -14,3 +14,11 @@ body {
 	margin-top: 20px;
 }
 
+.card {
+	margin: 1%;
+	display: inline-block;
+}
+
+h6 {
+	font-size: 85%;
+}
