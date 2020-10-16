@@ -15,10 +15,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     document.getElementById('search-form').addEventListener('submit', e => {
         e.preventDefault();
-        document.querySelector(".movies-container").innerHTML = renderMovies(movieData);
+        let searchString = document.querySelector('.search-bar').value;
+        let urlEncodedSearchString = encodeURIComponent(searchString);
+        axios.get(`http://www.omdbapi.com/?apikey=8b802142&s=${urlEncodedSearchString}`).then(response => {
+            document.querySelector(".movies-container").innerHTML = renderMovies(response.data.Search);
+        })
     });
 });
 
+//This function broke when I added the API into the mix. Need to fix this and most likely the "removeFromWatchList" function in watchlist.js
 function saveToWatchList(imdbID) {
     let movie = movieData.find(currentMovie => {
         return currentMovie.imdbID == imdbID;
