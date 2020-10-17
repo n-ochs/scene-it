@@ -1,3 +1,5 @@
+let movieSearchData;
+
 document.addEventListener('DOMContentLoaded', () => {
     function renderMovies(movieArray) {
         let movieHTML = movieArray.map(currentMovie => {
@@ -18,14 +20,14 @@ document.addEventListener('DOMContentLoaded', () => {
         let searchString = document.querySelector('.search-bar').value;
         let urlEncodedSearchString = encodeURIComponent(searchString);
         axios.get(`http://www.omdbapi.com/?apikey=8b802142&s=${urlEncodedSearchString}`).then(response => {
-            document.querySelector(".movies-container").innerHTML = renderMovies(response.data.Search);
-        })
+            movieSearchData = response.data.Search;
+            document.querySelector(".movies-container").innerHTML = renderMovies(movieSearchData);
+        });
     });
 });
 
-//This function broke when I added the API into the mix. Need to fix this and most likely the "removeFromWatchList" function in watchlist.js
 function saveToWatchList(imdbID) {
-    let movie = movieData.find(currentMovie => {
+    let movie = movieSearchData.find(currentMovie => {
         return currentMovie.imdbID == imdbID;
     })
     let watchlistJSON = localStorage.getItem('watchlist');
@@ -36,4 +38,4 @@ function saveToWatchList(imdbID) {
     watchlist.push(movie);
     watchlistJSON = JSON.stringify(watchlist);
     localStorage.setItem('watchlist', watchlistJSON);
-}
+};
